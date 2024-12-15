@@ -65,4 +65,4 @@ La plataforma se enfoca en ofrecer una experiencia de usuario sencilla y fluida,
 ![SimpleDEX Preview](media/images/preview3.png)
 
 ## Deploy
-
+[https://angel-farina.github.io/simpledex-frontend/](https://angel-farina.github.io/simpledex-frontend/)
