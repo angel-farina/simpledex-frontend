@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleDEX</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="media\images\favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+
+<body
+    class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-300 min-h-screen flex flex-col items-center">
+    <header class="w-full bg-gray-800 text-gray-100 py-4 mb-8 shadow-md">
+        <div class="container mx-auto text-center">
+            <div class="flex justify-center items-center gap-3">
+                <h1 class="text-4xl text-gray-100 font-bold flex items-center gap-3">
+                    SimpleDEX
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="h-10 w-10 text-purple-400">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+                    </svg>
+                    Intercambia TKA y TKB fácilmente
+                </h1>
+            </div>
+
+        </div>
+    </header>
+
+    <main class="container max-w-2xl mx-auto px-4">
+        <!-- ########################################################################## -->
+
+        <!-- Sección de conexión -->
+        <section class="text-center mb-0">
+            <button id="btnConnect"
+                class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition">Conectar
+                Wallet</button>
+            <button id="btnDisconnect"
+                class="bg-yellow-600 text-white px-6 py-2 rounded-md hover:bg-yellow-700 transition mt-4 hidden">Desconectar</button>
+            <p id="status" class="text-gray-400 mt-4">Parece que tu wallet no está conectada. Conéctate para empezar.
+            </p>
+        </section>
+
+        <!-- Contenedor para el efecto -->
+        <div id="aestheticEffect"></div>
+
+        <!-- Sección boton de refresco de balances, precios y reservas -->
+        <section id="refreshButton" class="hidden flex justify-start items-center mb-4">
+            <button id="btnRefreshAll"
+                class="bg-transparent text-indigo-500 hover:text-indigo-500 p-1 rounded-full border-2 border-indigo-500 hover:bg-indigo-600 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="h-4 w-4 text-indigo-500">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+            </button>
+        </section>
+
+        <!-- Mensaje informativo sobre el modo sin normalizar -->
+        <div id="decimalInfo" class="hidden bg-gray-800 text-gray-300 p-2 mt-4 mb-4 rounded-2xl">
+            <p class="text-center">
+                Las cantidades se deben ingresan en su valor base (sin normalización).
+            </p>
+        </div>
+
+        <!-- ########################################################################## -->
+        <!-- ########################################################################## -->
+
+        <!-- Sección de balances, precios y reservas -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+            <!-- Sección de balances -->
+            <section id="balancesSection"
+                class="hidden bg-gray-800 shadow-md rounded-2xl p-6 flex flex-col items-center">
+                <h3 class="text-lg font-semibold text-gray-100 mb-2 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="h-6 w-6 text-purple-400">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 0 1-2.031.352 5.988 5.988 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971Zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 0 1-2.031.352 5.989 5.989 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971Z" />
+                    </svg>
+                    Wallet Balances
+                </h3>
+                <div class="w-full text-center">
+                    <p id="ethBalance" class="text-2xl font-bold text-purple-500 mb-1 truncate max-w-full">ETH: --</p>
+                    <p id="tokenABalance" class="text-2xl font-bold text-indigo-400 mb-1 truncate max-w-full">TKA: --
+                    </p>
+                    <p id="tokenBBalance" class="text-2xl font-bold text-indigo-400 mb-1 truncate max-w-full">TKB: --
+                    </p>
+                </div>
+            </section>
+
+            <!-- Sección de precios de tokens -->
+            <section id="tokenPriceSection"
+                class="hidden bg-gray-800 shadow-md rounded-2xl p-6 flex flex-col items-center">
+                <h3 class="text-lg font-semibold text-gray-100 mb-2 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="h-6 w-6 text-green-400">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    Precio de Tokens
+                </h3>
+                <div class="w-full text-center">
+                    <p id="tokenPrices" class="text-2xl font-bold text-green-400 truncate max-w-full">Precios: --</p>
+                </div>
+            </section>
+
+            <!-- Sección de reservas -->
+            <section id="reservesSection"
+                class="hidden bg-gray-800 shadow-md rounded-2xl p-6 flex flex-col items-center">
+                <h3 class="text-lg font-semibold text-gray-100 mb-2 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="h-6 w-6 text-yellow-400">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 2.25C5.832 2.25 3.25 4.69 3.25 7.875c0 1.17.308 2.271.847 3.219-.046.31-.098.622-.156.935-.25 1.322-.558 2.953-.972 3.815-.112.226-.28.501-.56.655-.233.124-.48.156-.713.156h-.001a.75.75 0 0 0-.75.75v1.5c0 .414.336.75.75.75h.75c1.273 0 2.37-.594 3.147-1.406a5.5 5.5 0 0 0 3.859 1.656h4.5a5.5 5.5 0 0 0 5.5-5.5v-.658c.497-.246.925-.579 1.25-.971a3.52 3.52 0 0 0 0-4.342c-.325-.392-.753-.725-1.25-.97v-.659a2.25 2.25 0 0 0-2.25-2.25h-1.136a6.374 6.374 0 0 0-5.114-2.625H9zm9.659 6.068a.75.75 0 1 1 1.5 0 .75.75 0 0 1-1.5 0zm-5.159.432a.75.75 0 0 1 .53.22l1 1a.75.75 0 1 1-1.06 1.06l-1-1a.75.75 0 0 1 .53-1.28z" />
+                    </svg>
+                    Reservas
+                </h3>
+                <div class="w-full text-center">
+                    <p id="reserves" class="text-2xl font-bold text-yellow-400 truncate max-w-full">Reservas: --</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- ########################################################################## -->
+        <!-- ########################################################################## -->
+
+        <!-- Sección de agregar liquidez -->
+        <section id="liquidityForm" class="hidden bg-gray-800 shadow-md rounded-2xl p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-100 mb-4 text-center">Agregar Liquidez 🪙</h2>
+            <div class="flex flex-col items-center justify-center w-full">
+                <input type="number" id="amountA" placeholder="Cantidad de Token A"
+                    class="w-3/4 p-2 border border-gray-600 bg-gray-900 rounded-2xl mb-4 text-gray-300 text-center">
+                <!-- Mensaje informativo para Token A -->
+                <p id="convertedAmountA" class="text-gray-400 mt-2 text-center"></p>
+
+                <input type="number" id="amountB" placeholder="Cantidad de Token B"
+                    class="w-3/4 p-2 border border-gray-600 bg-gray-900 rounded-2xl mb-4 text-gray-300 text-center">
+                <!-- Mensaje informativo para Token B -->
+                <p id="convertedAmountB" class="text-gray-400 mt-2 text-center"></p>
+                <button id="btnAddLiquidity"
+                    class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition flex items-center">
+                    <span id="buttonAddLiquidityText">Agregar Liquidez</span>
+                    <svg id="spinner" class="hidden animate-spin h-5 w-5 ml-2" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.372 0 0 5.372 0 12h4zm2 5.291A7.966 7.966 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    <span id="successIcon" class="hidden text-green-500 ml-2">✅</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Sección de intercambio de tokens -->
+        <section id="swapForm" class="hidden bg-gray-800 shadow-md rounded-2xl p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-100 mb-4 text-center">Intercambiar Tokens 🔄</h2>
+            <div class="flex flex-col items-center justify-center w-full">
+                <input type="number" id="amountSwap" placeholder="Cantidad a intercambiar"
+                    class="w-3/4 p-2 border border-gray-600 bg-gray-900 rounded-2xl mb-4 text-gray-300 text-center">
+                <!-- Mensaje informativo del valor en 18 decimales -->
+                <p id="convertedAmount" class="text-gray-400 mt-2 text-center"></p>
+                <div class="flex justify-between w-3/4">
+                    <button id="btnSwapAtoB"
+                        class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                        Intercambiar TKA ➡️ TKB
+                    </button>
+                    <button id="btnSwapBtoA"
+                        class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                        Intercambiar TKB ➡️ TKA
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de retirar liquidez -->
+        <section id="removeLiquidityForm" class="hidden bg-gray-800 shadow-md rounded-2xl p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-100 mb-4 text-center">Retirar Liquidez 💰</h2>
+            <div class="flex flex-col items-center justify-center w-full">
+                <input type="number" id="amountRemoveA" placeholder="Cantidad de Token A"
+                    class="w-3/4 p-2 border border-gray-600 bg-gray-900 rounded-2xl mb-4 text-gray-300 text-center">
+                <!-- Mensaje informativo para Token A -->
+                <p id="convertedRemoveA" class="text-gray-400 mt-2 text-center"></p>
+
+                <input type="number" id="amountRemoveB" placeholder="Cantidad de Token B"
+                    class="w-3/4 p-2 border border-gray-600 bg-gray-900 rounded-2xl mb-4 text-gray-300 text-center">
+                <!-- Mensaje informativo para Token B -->
+                <p id="convertedRemoveB" class="text-gray-400 mt-2 text-center"></p>
+
+                <button id="btnRemoveLiquidity"
+                    class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                    Retirar Liquidez
+                </button>
+            </div>
+        </section>
+        
+        <!-- ########################################################################## -->
+    </main>
+
+    <footer class="w-full bg-gray-800 text-gray-400 text-center py-4 mt-auto">
+        <p class="text-sm">&copy; 2024 SimpleDEX - @angel-farina - ETH-Kipu C3. Todos los derechos reservados.</p>
+    </footer>
+
+    <script type="module" src="static/js/app.js"></script>
+</body>
+
+</html>
