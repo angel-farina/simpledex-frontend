@@ -39,6 +39,10 @@ La plataforma se enfoca en ofrecer una experiencia de usuario sencilla y fluida,
   - Intercambiar **TKA** y **TKB**, cada uno con su propio contrato ERC-20.
   - Gestionar reservas de los tokens en el pool de liquidez.
   - Calcular precios de intercambio dinámicos.
+  - Contratos:
+    [Token A](https://sepolia.etherscan.io/address/0xa82206213552aa1e3eb91162a54cb02e11a4f256)
+    [Token B](https://sepolia.etherscan.io/address/0xcc86cf8f6eba8e2441514de5e41ba4cb6b6425ea)
+    [SimpleDEX](https://sepolia.etherscan.io/address/0x1c8aa2a0104162d69e5e4ed91c3aa2f4b3253c87)
 
 ### **Conexión Blockchain**:
 - **[Ethers.js](https://docs.ethers.org/)**: Librería para interactuar con contratos inteligentes en Ethereum.
